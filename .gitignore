@@ -1,0 +1,7 @@
+
+.idea/
+*.pyc
+*.save
+*.swp
+wsgi.py
+venv/

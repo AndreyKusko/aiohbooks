@@ -1,0 +1,9 @@
+
+postgres:
+  database: aiohbooks
+  user: aiohbooks_user
+  password: aiohbooks_pass
+  host: localhost
+  port: 5432
+  minsize: 1
+  maxsize: 5
