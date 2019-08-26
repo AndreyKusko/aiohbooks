@@ -1,11 +1,9 @@
-import json
-
+from aiohttp import web
 import aiohttp_jinja2
 import requests
-from aiohttp import web
+import json
+from main_files.settings import MY_BOOKS_URL
 from aiohttp_session import get_session
-
-from settings import MY_BOOKS_URL
 
 
 @aiohttp_jinja2.template('base.html')
@@ -13,14 +11,22 @@ async def base(request):
     return
 
 
+def qwe():
+    asd = 123
+    return asd
+
+
 async def books(request):
+    print(str(request))
     context = dict()
     session = await get_session(request)
     my_book_cookies = session.get('my_book_cookies', None)
+    # print('my_book_cookies=', my_book_cookies)
     if my_book_cookies:
         response = requests.get(MY_BOOKS_URL + 'api/profile/', cookies=session.get('my_book_cookies'))
+        text = json.loads(response.text)
         bookuserlist_response = requests.get(
-            MY_BOOKS_URL + 'api/bookuserlist/?user=' + str(json.loads(response.text)['objects'][0]['id']),
+            MY_BOOKS_URL + 'api/bookuserlist/?user=' + str(text['objects'][0]['id']),
             cookies=session.get('my_book_cookies')
         )
         items = bookuserlist_response.json()['objects']
